@@ -12,6 +12,10 @@ h1{
     font-size: 20px;
 }
 
+.fa-solid {
+    color: #999;
+}
+
 i{
     font-size: 15px;
     cursor: pointer;
@@ -36,9 +40,7 @@ header{
     padding-bottom: 25px;
 }
 
-.fa-solid {
-    color: #999;
-}
+
 
 .tweet-input-area {
     display: flex;
