@@ -35,11 +35,11 @@ function handleLikesClick(tweetId)
 
   if (targetTweetObj.isLiked)
   {
-    targetTweetObj.likes--;
+    targetTweetObj.likes++;
     
     
   }else{
-    targetTweetObj.likes++;
+    targetTweetObj.likes--;
   }
 
   
@@ -56,7 +56,7 @@ function handleRetweetClick(tweetId)
 
     if (targetretweetObj.isRetweeted)
     {
-        targetretweetObj.retweets++
+        targetretweetObj.retweets++;
     }else {
         targetretweetObj.retweets--;
     }
@@ -85,6 +85,36 @@ function getTweetHtml()
         retweetIconColor = 'retweeted';
     }
 
+    let repliesHtml = '';
+
+    if (tweet.replies.length > 0)
+    {
+        console.log(tweet.uuid);
+
+        /**
+         * if a tweet has replies, iterate through the replies
+         *      
+         */
+
+        tweet.replies.forEach(reply => {
+            repliesHtml += `
+            <div class="tweet-reply">
+                <div class="tweet-inner">
+                    <img src="${reply.profilePic}" class="profile-pic">
+                    <div>
+                        <p class="handle">${reply.handle}</p>
+                        <p class="tweet-text">${reply.tweetText}</p>
+                    </div>
+                </div>
+            
+            </div>
+            
+            `
+        })
+
+
+    }
+
         tweetHtml += `
         <div class="tweet">
         <div class="tweet-inner">
@@ -108,6 +138,11 @@ function getTweetHtml()
             </div>   
         </div>            
     </div>
+    <div class="replies-${tweet.uuid}">
+    ${repliesHtml}
+    
+    </div>
+
 </div>`
     });
 
