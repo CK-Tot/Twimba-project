@@ -8,6 +8,21 @@ const tweetBtn = document.getElementById('tweet-btn');
 const feed = document.getElementById('feed');
 import { tweetsData } from "./data.js";
 
+// Event delegation by using one parent event;
+document.addEventListener('click', (e) => {
+    const likeId = e.target.dataset.like;
+    handleLikes(likeId);
+});
+
+// Like functions
+function handleLikes(tweetId)
+{
+   const targetTweetObj = tweetsData.filter(tweet => tweet.uuid === tweetId)[0];
+  targetTweetObj.likes++;
+  render();
+
+}
+
 // return tweet html
 function getTweetHtml()
 {
@@ -22,15 +37,15 @@ function getTweetHtml()
             <p class="tweet-text">${tweet.tweetText}</p>
             <div class="tweet-details">
                 <span class="tweet-detail">
-                <i class="fa-regular fa-comment-dots"></i>
+                <i class="fa-regular fa-comment-dots" data-reply="${tweet.uuid}"></i>
                 ${tweet.replies.length}
                 </span>
                 <span class="tweet-detail">
-                     <i class="fa-solid fa-heart"></i>
+                     <i class="fa-solid fa-heart" data-like="${tweet.uuid}"></i>
                     ${tweet.likes}
                 </span>
                 <span class="tweet-detail">
-              <i class="fa-solid fa-retweet"></i>
+              <i class="fa-solid fa-retweet" data-retweet="${tweet.uuid}"></i>
                 ${tweet.retweets}
                 </span>
             </div>   
