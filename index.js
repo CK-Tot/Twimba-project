@@ -11,15 +11,49 @@ import { tweetsData } from "./data.js";
 // Event delegation by using one parent event;
 document.addEventListener('click', (e) => {
     const likeId = e.target.dataset.like;
-    handleLikes(likeId);
+    const retweetId = e.target.dataset.retweet;
+    if (likeId)
+    {
+        handleLikesClick(likeId);
+    }
+
+    if (retweetId)
+    {
+        handleRetweetClick(retweetId);
+    }
+    
 });
 
 // Like functions
-function handleLikes(tweetId)
+function handleLikesClick(tweetId)
 {
    const targetTweetObj = tweetsData.filter(tweet => tweet.uuid === tweetId)[0];
-  targetTweetObj.likes++;
+  if (!targetTweetObj.isLiked)
+  {
+    targetTweetObj.likes++;
+    
+  }else{
+    targetTweetObj.likes--;
+  }
+  targetTweetObj.isLiked = !targetTweetObj.isLiked;
   render();
+
+}
+
+// retweet function
+function handleRetweetClick(tweetId)
+{
+    const targetretweetObj = tweetsData.filter(tweet => tweet.uuid === tweetId)[0];
+    
+    if (!targetretweetObj.isRetweeted)
+    {
+        targetretweetObj.retweets++
+    }else {
+        targetretweetObj.retweets--;
+    }
+
+    targetretweetObj.isRetweeted = !targetretweetObj.isRetweeted;
+    render();
 
 }
 
