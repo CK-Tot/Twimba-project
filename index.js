@@ -4,7 +4,6 @@
  */
 
 const tweetInput = document.getElementById('tweet-input');
-const tweetBtn = document.getElementById('tweet-btn');
 const feed = document.getElementById('feed');
 import { tweetsData } from "./data.js";
 
@@ -14,12 +13,17 @@ import { tweetsData } from "./data.js";
 document.addEventListener('click', (e) => {
     const likeId = e.target.dataset.like;
     const retweetId = e.target.dataset.retweet;
+    const replyId = e.target.dataset.reply;
     if (likeId)
     {
         handleLikesClick(likeId);
     }else if (retweetId)
     {
         handleRetweetClick(retweetId);
+    }else if (replyId) {
+        handleReplyClick(replyId);
+    }else if (e.target.id === 'tweet-btn'){
+        handleTweetBtnClick();       
     }
 
    
@@ -66,6 +70,19 @@ function handleRetweetClick(tweetId)
 
 }
 
+// Replay Handle 
+function handleReplyClick(replyId)
+{
+    const replyContainer = document.getElementById(`replies-${replyId}`);
+    replyContainer.classList.toggle('hidden');
+}
+
+function handleTweetBtnClick()
+{
+    console.log(tweetInput.value);
+    
+}
+
 // return tweet html
 function getTweetHtml()
 {
@@ -89,8 +106,6 @@ function getTweetHtml()
 
     if (tweet.replies.length > 0)
     {
-        console.log(tweet.uuid);
-
         /**
          * if a tweet has replies, iterate through the replies
          *      
@@ -138,7 +153,7 @@ function getTweetHtml()
             </div>   
         </div>            
     </div>
-    <div class="replies-${tweet.uuid}">
+    <div class="hidden" id="replies-${tweet.uuid}">
     ${repliesHtml}
     
     </div>
