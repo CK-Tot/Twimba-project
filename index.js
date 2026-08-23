@@ -3,6 +3,9 @@
  * 
  */
 
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+  
+
 const tweetInput = document.getElementById('tweet-input');
 const feed = document.getElementById('feed');
 import { tweetsData } from "./data.js";
@@ -11,6 +14,7 @@ import { tweetsData } from "./data.js";
 
 // Event delegation by using one parent event;
 document.addEventListener('click', (e) => {
+    e.preventDefault();
     const likeId = e.target.dataset.like;
     const retweetId = e.target.dataset.retweet;
     const replyId = e.target.dataset.reply;
@@ -79,7 +83,25 @@ function handleReplyClick(replyId)
 
 function handleTweetBtnClick()
 {
-    console.log(tweetInput.value);
+    if (tweetInput.value.trim() === '')
+    {
+        return
+    }
+    tweetsData.unshift({
+        handle: '@Scrimba',
+        profilePic: 'images/scrimbalogo.png',
+        likes: 0,
+        retweets: 0,
+        tweetText: tweetInput.value,
+        replies: [],
+        isLiked: false,
+        isRetweeted: false,
+        uuid: uuidv4()
+    });
+    
+    render();
+    tweetInput.value = ''
+
     
 }
 
